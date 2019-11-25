@@ -30,4 +30,14 @@ On voit qu'on a pas de vérification de sécurité des dépendances, on va l'ins
 #### security-checker
 Cette bibliothèque regarde votre configuration, intérroge des bases de données pour vérifier que vos dépendances sont sécurisées:
 
-    composer require security-check       
+    composer require security-check 
+    
+Elle est appelée à chaque composer update, ou on l'utilise comme ceci:
+
+    php bin/console security:check    
+### Utiliser Apache pour faire tourner Symfony
+Si on fait un lien vers /public et que l'on souhaite rester en mode débuggage (que la toolbar reste active), on peut installer une bibliothèque pour ça:
+
+    composer require symfony/apache-pack
+  
+  Elle fonctionnera en local comme sur nimporte quel serveur web. 
