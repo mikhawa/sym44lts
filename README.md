@@ -41,3 +41,8 @@ Si on fait un lien vers /public et que l'on souhaite rester en mode débuggage (
     composer require symfony/apache-pack
   
   Elle fonctionnera en local comme sur nimporte quel serveur web. 
+  
+### Créons notre contrôleur général
+
+    php bin/console make:controller
+      
