@@ -105,4 +105,20 @@ pour tester le menu dans home/index.html.twig
         <li class="nav-item">
             <a class="nav-link" href="{{ path('rubriques',{titre: valeur} ) }}">{{ clef }}</a>
         </li>
-        {% endfor %}                         
+        {% endfor %}           
+### Création de la DB
+création du dossier datas dans lequel on met un fichier créé avec workbench (sym44lts.mwb)
+
+#### Création d'un utilisateur 
+dans PhpMyAdmin on crée un utilisateur nommé "sym44lts" avec comme mot de passe : "44lts", on coche :
+ 
+ "Créer une base portant son nom et donner à cet utilisateur tous les privilèges sur cette base."
+ 
+ #### création de .env.local
+ On duplique .env sous le nom .env.local, ce fichier n'ira pas sur github, c'est généralement plus sécure, sauf quand on l'écrit manuellement dans readme.md ;-)
+ 
+    DATABASE_URL=mysql://sym44lts:44lts@127.0.0.1:3306/sym44lts?serverVersion=5.7
+    
+    
+
+                      
