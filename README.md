@@ -119,9 +119,14 @@ dans PhpMyAdmin on crée un utilisateur nommé "sym44lts" avec comme mot de pass
  
     DATABASE_URL=mysql://sym44lts:44lts@127.0.0.1:3306/sym44lts?serverVersion=5.7
   
-  ### Importation de la DB vers notre dossier src/Entity 
+  #### Importation de la DB vers notre dossier src/Entity 
   
-    php bin/console doctrine:mapping:import "App\Entity" annotation --path=src/Entity 
+    php bin/console doctrine:mapping:import "App\Entity" annotation --path=src/Entity
+     
+ Les fichiers sont créés dans src/Entity
     
+#### Ajoutons les getters et setters
+Et autres méthodes avec la commande:
 
+    php bin/console make:entity --regenerate App
                       
