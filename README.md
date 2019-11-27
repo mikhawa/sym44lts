@@ -118,7 +118,10 @@ dans PhpMyAdmin on crée un utilisateur nommé "sym44lts" avec comme mot de pass
  On duplique .env sous le nom .env.local, ce fichier n'ira pas sur github, c'est généralement plus sécure, sauf quand on l'écrit manuellement dans readme.md ;-)
  
     DATABASE_URL=mysql://sym44lts:44lts@127.0.0.1:3306/sym44lts?serverVersion=5.7
-    
+  
+  ### Importation de la DB vers notre dossier src/Entity 
+  
+    php bin/console doctrine:mapping:import "App\Entity" annotation --path=src/Entity 
     
 
                       
