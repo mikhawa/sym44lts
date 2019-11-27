@@ -79,4 +79,13 @@ pour tester le menu dans home/index.html.twig
                 // envoi du tableau à twig sous le nom "suitemenu"
                 "suitemenu"=>$menu,
             ]);    
-#### Puis dans index.html.twig                    
+#### Puis dans index.html.twig      
+    {% block menuhaut %}
+        {% for clef, valeur in suitemenu %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ valeur }}">{{ clef }}</a>
+        </li>
+        {% endfor %}
+    {% endblock %}
+    
+                     
