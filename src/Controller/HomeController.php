@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
@@ -13,13 +14,20 @@ class HomeController extends AbstractController
     public function index()
     {
         // création d'un tableau pour l'envoyer à twig
-        $menu = ["Actualités"=>"/rubrique/actualites",
-                "Qui sommes-nous"=>"/rubrique/whois",
-                "Nous contacter"=>"/rubrique/contact",
+        $menu = ["Actualités"=>"actualites",
+                "Qui sommes-nous"=>"whois",
+                "Nous contacter"=>"contact",
             ];
         return $this->render('home/index.html.twig', [
             // envoi du tableau à twig sous le nom "suitemenu"
             "suitemenu"=>$menu,
         ]);
+    }
+
+    /**
+     * @Route("/rubrique/{titre}", name="rubriques")
+     */
+    public function showRubrique(string $titre){
+        return new Response($titre);
     }
 }

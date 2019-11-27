@@ -88,4 +88,21 @@ pour tester le menu dans home/index.html.twig
         {% endfor %}
     {% endblock %}
     
-                     
+#### on affiche sous forme de réponse http le titre
+
+    ....
+    use Symfony\Component\HttpFoundation\Response;
+    ....
+    /**
+     * @Route("/rubrique/{titre}", name="rubriques")
+     */
+    public function showRubrique(string $titre){
+        return new Response($titre);
+    }
+#### on modifie bles liens dans index.html.twig
+
+     {% for clef, valeur in suitemenu %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('rubriques',{titre: valeur} ) }}">{{ clef }}</a>
+        </li>
+        {% endfor %}                         
