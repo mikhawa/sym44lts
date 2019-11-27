@@ -45,4 +45,38 @@ Si on fait un lien vers /public et que l'on souhaite rester en mode débuggage (
 ### Créons notre contrôleur général
 
     php bin/console make:controller
-      
+### création des templates
+On utilise bootstrap 4, ici grâce aux CDN (Les fichiers sont en ligne)     
+
+dans base.html.twig on rajoute le meta pour le responsive de bootstrap
+
+    <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <title>{% block title %}Welcome!{% endblock %}</title>
+
+On crée les blocks complémentaires dans bootstrap4.html.twig qui hérite de base.html.twig
+
+/templates/home/index.twig hérite de bootstrap4.html.twig
+### Chemins depuis un template
+En interne, on utilise la fonction twig path() pour chercher dans Symfony le nom (ancre) du chemin voulu
+
+pour l'accueil dans bootstrap4.html.twig:
+
+    <a href="{{path('homepage')}}">Home</a>   
+##### Astuce, pour trouver tous vos chemin depuis la console
+
+    php bin/console debug:router
+          
+#### On change notre HomeController
+pour tester le menu dans home/index.html.twig
+
+    // création d'un tableau pour l'envoyer à twig
+            $menu = ["Actualités"=>"/rubrique/actualites",
+                    "Qui sommes-nous"=>"/rubrique/whois",
+                    "Nous contacter"=>"/rubrique/contact",
+                ];
+            return $this->render('home/index.html.twig', [
+                // envoi du tableau à twig sous le nom "suitemenu"
+                "suitemenu"=>$menu,
+            ]);    
+#### Puis dans index.html.twig                    

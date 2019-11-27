@@ -12,8 +12,14 @@ class HomeController extends AbstractController
      */
     public function index()
     {
+        // création d'un tableau pour l'envoyer à twig
+        $menu = ["Actualités"=>"/rubrique/actualites",
+                "Qui sommes-nous"=>"/rubrique/whois",
+                "Nous contacter"=>"/rubrique/contact",
+            ];
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+            // envoi du tableau à twig sous le nom "suitemenu"
+            "suitemenu"=>$menu,
         ]);
     }
 }

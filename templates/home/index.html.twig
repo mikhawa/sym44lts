@@ -1,5 +1,11 @@
 {% extends 'bootstrap4.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}{{ parent() }} | Accueil{% endblock %}
+
+{% block menuhaut %}
+    <li class="nav-item">
+        <a class="nav-link" href="#">autre chose</a>
+    </li>
+{% endblock %}
 
 
