@@ -38,9 +38,11 @@ class ArticleFixtures extends Fixture
             $slug = $fake->slug;
             $text = $fake->text(500);
             $date = $fake->dateTime();
+            /*
             $em = EntityManager::class->getDoctrine()->getRepository(User::class);
             $query = $em->find(random_int(56,103));
-            $iduser = $query->getIduser();
+            */
+            $iduser = 7;
 
             // utilisation des setters pour remplir l'instance
             $article->setTitre($titre)
