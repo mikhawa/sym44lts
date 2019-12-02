@@ -132,4 +132,12 @@ Et autres méthodes avec la commande:
                   
 #### Pour vérifier à tout moment si vos bibliothèques sont sécurisées
                       
-    php bin/console security:check                 
+    php bin/console security:check    
+    
+#### Création de fausses données
+On charge les Fixtures
+
+    composer require orm-fixtures --dev
+Pour remplir nos tables avec des Fixtures   
+
+    php bin/console make:fixtures              
