@@ -138,6 +138,6 @@ Et autres méthodes avec la commande:
 On charge les Fixtures
 
     composer require orm-fixtures --dev
-Pour remplir nos tables avec des Fixtures   
+Pour remplir nos tables avec des Fixtures, on va générer des fichiers pour le faire   
 
     php bin/console make:fixtures              
