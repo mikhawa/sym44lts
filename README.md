@@ -209,4 +209,35 @@ Le $manager->flush() effectue réellement la requête (un seul insert de 50 lign
     composer require fzaninotto/faker
 La documentation : https://packagist.org/packages/fzaninotto/faker
 
-                   
+#### Utilisation de Faker dans notre fixture
+
+    // chargement de Faker
+            $fake = Factory::create("fr_BE");
+    
+            // Autant d'utilisateurs que l'on souhaite
+            for($i=0;$i<50;$i++) {
+    
+                // création d'une instance de Entity/User
+                $user = new User();
+    
+                // création des variables via Faker
+                $login = $fake->userName;
+                $name = $fake->name;
+                $pwd = $fake->password(12);
+    
+                // utilisation des setters pour remplir l'instance
+                $user->setThelogin($login)
+                    ->setThename($name)
+                    ->setThepwd($pwd);
+    
+                // on sauvegarde l'utilisateur dans doctrine
+                $manager->persist($user);
+            }
+            // doctrine enregistre l'utilisateur dans la table user
+            $manager->flush();
+        }
+puis :
+
+        php bin/console doctrine:fixtures:load
+
+                               

@@ -5,11 +5,15 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory;
 
 class UserFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+
+        // chargement de Faker
+        $fake = Factory::create("fr_BE");
 
         // Autant d'utilisateurs que l'on souhaite
         for($i=0;$i<50;$i++) {
@@ -17,10 +21,15 @@ class UserFixtures extends Fixture
             // création d'une instance de Entity/User
             $user = new User();
 
+            // création des variables via Faker
+            $login = $fake->userName;
+            $name = $fake->name;
+            $pwd = $fake->password(12);
+
             // utilisation des setters pour remplir l'instance
-            $user->setThelogin("Lulu$i")
-                ->setThename("Lulu Poilu$i")
-                ->setThepwd("Lulu$i");
+            $user->setThelogin($login)
+                ->setThename($name)
+                ->setThepwd($pwd);
 
             // on sauvegarde l'utilisateur dans doctrine
             $manager->persist($user);
