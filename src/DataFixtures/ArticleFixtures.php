@@ -27,14 +27,6 @@ class ArticleFixtures extends Fixture
             // phrase de 1 à 8 mots
             $titre = $fake->sentence(8, true);
             // slug
-
-            /*
-             *
-             * C'est de la merde
-             *
-             *
-             */
-
             $slug = $fake->slug;
             $text = $fake->text(500);
             $date = $fake->dateTime();
@@ -43,6 +35,7 @@ class ArticleFixtures extends Fixture
             $query = $em->find(random_int(56,103));
             */
             $iduser = 7;
+            $this->
 
             // utilisation des setters pour remplir l'instance
             $article->setTitre($titre)

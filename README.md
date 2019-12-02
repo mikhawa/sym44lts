@@ -144,7 +144,6 @@ Pour remplir nos tables avec des Fixtures, on va générer des fichiers pour le 
     
 #### Dans la page de UserFixture
 Insertion d'un utilisateur
-    <?php
     
     namespace App\DataFixtures;
     
