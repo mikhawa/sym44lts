@@ -129,4 +129,7 @@ dans PhpMyAdmin on crée un utilisateur nommé "sym44lts" avec comme mot de pass
 Et autres méthodes avec la commande:
 
     php bin/console make:entity --regenerate App
+                  
+#### Pour vérifier à tout moment si vos bibliothèques sont sécurisées
                       
+    php bin/console security:check                 
