@@ -175,4 +175,30 @@ On va charger cette fixture vers la DB:
 
     php bin/console doctrine:fixtures:load
     
-! ça vide la base de donnée                 
+! ça vide la base de donnée     
+
+#### Boucle pour en insérer plusieurs
+La boucle for nous permet d'en insérer plusieurs, on utilise $i pour éviter le DUPLICATE CONTENT
+
+    public function load(ObjectManager $manager)
+        {
+            // création d'une instance de Entity/User
+            $user = new User();
+    
+            // Autant d'utilisateurs que l'on souhaite
+            for($i=0;$i<50;$i++) {
+    
+                // utilisation des setters pour remplir l'instance
+                $user->setThelogin("Lulu$i")
+                    ->setThename("Lulu Poilu$i")
+                    ->setThepwd("Lulu$i");
+    
+                // on sauvegarde l'utilisateur dans doctrine
+                $manager->persist($user);
+            }
+            // doctrine enregistre l'utilisateur dans la table user
+            $manager->flush();
+        }
+Le $manager->persist reste dans la boucle.
+
+Le $manager->flush() effectue réellement la requête (un seul insert de 50 lignes)                    

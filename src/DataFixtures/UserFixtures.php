@@ -13,14 +13,17 @@ class UserFixtures extends Fixture
         // création d'une instance de Entity/User
         $user = new User();
 
-        // utilisation des setters pour remplir l'instance
-        $user->setThelogin("Lulu")
-            ->setThename("Lulu Poilu")
-            ->setThepwd("Lulu");
+        // Autant d'utilisateurs que l'on souhaite
+        for($i=0;$i<50;$i++) {
 
-        // on sauvegarde l'utilisateur dans doctrine
-        $manager->persist($user);
+            // utilisation des setters pour remplir l'instance
+            $user->setThelogin("Lulu$i")
+                ->setThename("Lulu Poilu$i")
+                ->setThepwd("Lulu$i");
 
+            // on sauvegarde l'utilisateur dans doctrine
+            $manager->persist($user);
+        }
         // doctrine enregistre l'utilisateur dans la table user
         $manager->flush();
     }
