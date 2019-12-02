@@ -10,11 +10,12 @@ class UserFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // création d'une instance de Entity/User
-        $user = new User();
 
         // Autant d'utilisateurs que l'on souhaite
         for($i=0;$i<50;$i++) {
+
+            // création d'une instance de Entity/User
+            $user = new User();
 
             // utilisation des setters pour remplir l'instance
             $user->setThelogin("Lulu$i")

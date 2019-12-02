@@ -182,11 +182,12 @@ La boucle for nous permet d'en insérer plusieurs, on utilise $i pour éviter le
 
     public function load(ObjectManager $manager)
         {
-            // création d'une instance de Entity/User
-            $user = new User();
     
             // Autant d'utilisateurs que l'on souhaite
             for($i=0;$i<50;$i++) {
+    
+                // création d'une instance de Entity/User
+                $user = new User();
     
                 // utilisation des setters pour remplir l'instance
                 $user->setThelogin("Lulu$i")
@@ -201,4 +202,11 @@ La boucle for nous permet d'en insérer plusieurs, on utilise $i pour éviter le
         }
 Le $manager->persist reste dans la boucle.
 
-Le $manager->flush() effectue réellement la requête (un seul insert de 50 lignes)                    
+Le $manager->flush() effectue réellement la requête (un seul insert de 50 lignes)     
+
+#### Chargement d'une bibliothèque dédiée aux Fixtures
+
+    composer require fzaninotto/faker
+La documentation : https://packagist.org/packages/fzaninotto/faker
+
+                   
