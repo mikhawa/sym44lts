@@ -20,6 +20,8 @@ class UserFixtures extends Fixture
 
             // création d'une instance de Entity/User
             $user = new User();
+            $this->addReference("user_reference_".$i, $user);
+
 
             // création des variables via Faker
             $login = $fake->userName;
@@ -36,5 +38,7 @@ class UserFixtures extends Fixture
         }
         // doctrine enregistre l'utilisateur dans la table user
         $manager->flush();
+
+
     }
 }

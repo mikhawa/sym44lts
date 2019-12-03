@@ -239,4 +239,55 @@ puis :
 
         php bin/console doctrine:fixtures:load
 
-                               
+ #### Partage des objets de fixtures pour les relations entre eux
+ Pour charger d'abord les utilisateurs dans ArticleFixtures.php :
+ 
+    ...
+    // pour charger d'abord UserFixtures.php
+    use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+    ...
+    class ArticleFixtures extends Fixture implements DependentFixtureInterface{
+    ...
+    $a=0;
+    // Autant d'articles que l'on souhaite
+    for($i=0;$i<100;$i++) {
+    
+       // création d'une instance de Entity/User
+       $article = new Article();
+    
+       // création des variables via Faker
+       // phrase de 1 à 8 mots
+       $titre = $fake->sentence(8, true);
+       // slug
+       $slug = $fake->slug;
+       $text = $fake->text(500);
+       $date = $fake->dateTime();
+       // chargement des objets users tant qu'il y en a (0 à 49)
+       if($a>49) $a=0;
+       $iduser = $this->getReference("user_reference_" . $a);
+       $a++;
+    
+       // utilisation des setters pour remplir l'instance
+       $article->setTitre($titre)
+           ->setSlug($slug)
+           ->setTexte($text)
+           ->setThedate($date)
+           ->setUserIduser($iduser);
+        ...
+        // les utilisateurs sont chargés en premier
+            public function getDependencies()
+            {
+                return array(
+                    UserFixtures::class,
+                );
+            }            
+créons ces références dans UserFixtures.php
+
+     // Autant d'utilisateurs que l'on souhaite
+            for($i=0;$i<50;$i++) {
+    
+                // création d'une instance de Entity/User
+                $user = new User();
+                $this->addReference("user_reference_".$i, $user);
+                
+Ce n'est pas encore vraiment au hasard... mais ça fait ce que l'on veut                                                  

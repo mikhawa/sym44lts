@@ -3,20 +3,21 @@
 namespace App\DataFixtures;
 
 use App\Entity\Article;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+// pour charger d'abord UserFixtures.php
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
-use Doctrine\ORM\EntityManager;
 
-class ArticleFixtures extends Fixture
+
+class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
 
         // chargement de Faker
         $fake = Factory::create("fr_BE");
-
+        $a=0;
         // Autant d'articles que l'on souhaite
         for($i=0;$i<100;$i++) {
 
@@ -30,12 +31,10 @@ class ArticleFixtures extends Fixture
             $slug = $fake->slug;
             $text = $fake->text(500);
             $date = $fake->dateTime();
-            /*
-            $em = EntityManager::class->getDoctrine()->getRepository(User::class);
-            $query = $em->find(random_int(56,103));
-            */
-            $iduser = 7;
-            $this->
+            // chargement des objets users tant qu'il y en a (0 à 49)
+            if($a>49) $a=0;
+            $iduser = $this->getReference("user_reference_" . $a);
+            $a++;
 
             // utilisation des setters pour remplir l'instance
             $article->setTitre($titre)
@@ -49,5 +48,12 @@ class ArticleFixtures extends Fixture
         }
         // doctrine enregistre les articles dans la table article
         $manager->flush();
+    }
+    // les utilisateurs sont chargés en premier
+    public function getDependencies()
+    {
+        return array(
+            UserFixtures::class,
+        );
     }
 }
