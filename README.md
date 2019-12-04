@@ -290,4 +290,147 @@ créons ces références dans UserFixtures.php
                 $user = new User();
                 $this->addReference("user_reference_".$i, $user);
                 
-Ce n'est pas encore vraiment au hasard... mais ça fait ce que l'on veut                                                  
+Ce n'est pas encore vraiment au hasard... mais ça fait ce que l'on veut                                    
+#### Pour le hasard, on peut utiliser les variables de sessions pour stocker le nombre de chaques entités générées:
+
+UserFixtures:
+
+    ...
+    // création d'une variable de session contenant le nombre d'utilisateur que l'on souhaite créer
+     $_SESSION['nb_users']=150;
+    
+     // Autant d'utilisateurs que l'on souhaite
+     for($i=0;$i<$_SESSION['nb_users'];$i++) {
+    
+         // création d'une instance de Entity/User
+         $user = new User();
+    
+         // on crée autant de références que d'utilisateurs que l'on souhaite créer, il seront utilisés dans ArticleFixtures.php
+         $this->addReference("mes_users_".$i,$user);
+         ...     
+ArticleFixtures ! Il faut implémenter la classe ArticleFixtures pour l'obliger à charger les utilisateurs en premier lieu:
+
+    ...
+    // pour faire communiquer les fichiers de fixtures entre eux
+    use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+    ...
+    class ArticleFixtures extends Fixture implements DependentFixtureInterface
+    ...
+    // on stocke dans la session le nombre d'articles qu'on veut insérer
+            $_SESSION['nb_article']=400;
+    
+            // Autant d'articles que l'on souhaite
+            for($i=0;$i<$_SESSION['nb_article'];$i++) {
+    
+     // création d'une instance de Entity/User
+     $article = new Article();
+    
+     // on crée autant de références que d'articles que l'on souhaite créer, il seront utilisés dans CategFixtures.php
+     $this->addReference("mes_articles_".$i,$article);
+    
+     // création des variables via Faker
+     // phrase de 1 à 8 mots
+     $titre = $fake->sentence(8, true);
+     // slug
+     $slug = $fake->slug;
+     $text = $fake->text(500);
+     $date = $fake->dateTime();
+    
+     // on prend un utilisateur au hasard entre 0 et le nombre stocké dans $_SESSION['nb_users'] => ici 150
+     $nbuser = random_int(0,$_SESSION['nb_users']-1);
+    
+     // on récupère la référence de l'utilisateur
+     $iduser = $this->getReference("mes_users_$nbuser");
+    
+     // utilisation des setters pour remplir l'instance
+     $article->setTitre($titre)
+         ->setSlug($slug)
+         ->setTexte($text)
+         ->setThedate($date)
+         ->setUserIduser($iduser);
+    
+     // on sauvegarde l'article dans doctrine
+                $manager->persist($article);
+    ...
+    ...
+    // Comme on ajoute une interface, on doit suivre ses règles, donc ajouter la méthode:
+    /**
+      * On met ici les classes de fixtures qui doivent être chargées avant celle-ci (un article sans auteur nous enverra une faute sql)
+      */
+     public function getDependencies()
+     {
+         // liste des classes nécessairement exécutées avant la classe actuel
+         return array(
+             UserFixtures::class,
+         );
+     }    
+Et de même pour CategFixtures.php
+
+    <?php
+    
+    namespace App\DataFixtures;
+    
+    
+    use App\Entity\Categ;
+    use Doctrine\Bundle\FixturesBundle\Fixture;
+    use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+    use Doctrine\Common\Persistence\ObjectManager;
+    use Faker\Factory;
+    
+    class CategFixtures extends Fixture implements DependentFixtureInterface
+    {
+        public function load(ObjectManager $manager)
+        {
+            $fake = Factory::create("fr_BE");
+    
+            // nombre de catégories
+            $_SESSION['nb_categ']=8;
+    
+            // on récupère le nombre d'articles
+            $nb_article = $_SESSION['nb_article'];
+    
+            for($i=0;$i<$_SESSION['nb_categ'];$i++) {
+    
+                $categ = new Categ();
+    
+                $this->addReference("mes_categs_".$i,$categ);
+    
+    
+    
+                // setters de la table categ
+                $categ->setTitre($fake->sentence(8,true))
+                ->setSlug($fake->slug(6,true))
+                ->setDescr($fake->sentence(25,true));
+    
+                // nombre d'articles se trouvant dans cette rubrique (entre 1 et 20)
+                $nbArticle = random_int(1,50);
+    
+                // tant qu'on doit rajouter des articles
+                for($b=0;$b<$nbArticle;$b++) {
+                    $recupArticle = $this->getReference("mes_articles_".random_int(0,$nb_article-1));
+                    $categ->addArticleIdarticle($recupArticle);
+                }
+    
+    
+                $manager->persist($categ);
+            }
+    
+            $manager->flush();
+        }
+    
+        /**
+         * Dépendances pour le manyTomany (addArticleIdarticle), on doit déjà avoir des articles pour faire le lien dans categ_has_article
+         */
+        public function getDependencies()
+        {
+            return array(
+                ArticleFixtures::class,
+            );
+        }
+    }
+Et pour exécuter l'insertion dans la DB:
+
+    php bin/console doctrine:fixtures:load
+
+
+                   
