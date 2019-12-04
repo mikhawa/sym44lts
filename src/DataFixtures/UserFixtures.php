@@ -15,16 +15,17 @@ class UserFixtures extends Fixture
         // chargement de Faker
         $fake = Factory::create("fr_BE");
 
-        // nombre d'utilisateurs
-        $_SESSION['nbUser'] = 50;
+        // création d'une variable de session contenant le nombre d'utilisateur que l'on souhaite créer
+        $_SESSION['nb_users']=150;
 
         // Autant d'utilisateurs que l'on souhaite
-        for($i=0;$i<$_SESSION['nbUser'];$i++) {
+        for($i=0;$i<$_SESSION['nb_users'];$i++) {
 
             // création d'une instance de Entity/User
             $user = new User();
-            $this->addReference("user_reference_".$i, $user);
 
+            // on crée autant de références que d'utilisateurs que l'on souhaite créer, il seront utilisés dans ArticleFixtures.php
+            $this->addReference("mes_users_".$i,$user);
 
             // création des variables via Faker
             $login = $fake->userName;
@@ -41,7 +42,5 @@ class UserFixtures extends Fixture
         }
         // doctrine enregistre l'utilisateur dans la table user
         $manager->flush();
-
-
     }
 }
