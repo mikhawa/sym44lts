@@ -1,0 +1,6 @@
+SELECT * FROM categ;
+SELECT * FROM user;
+SELECT * FROM article;
+SELECT COUNT(*) FROM categ;
+SELECT COUNT(*) FROM user;
+SELECT COUNT(*) FROM article;

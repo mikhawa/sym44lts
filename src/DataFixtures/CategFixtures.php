@@ -30,8 +30,8 @@ class CategFixtures extends Fixture implements DependentFixtureInterface
 
 
             // setters de la table categ
-            $categ->setTitre($fake->sentence(8,true))
-            ->setSlug($fake->slug(6,true))
+            $categ->setTitre($fake->sentence(3,false))
+            ->setSlug($fake->slug(3,true))
             ->setDescr($fake->sentence(25,true));
 
             // nombre d'articles se trouvant dans cette rubrique (entre 1 et 20)
