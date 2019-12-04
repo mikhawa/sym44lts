@@ -15,8 +15,11 @@ class UserFixtures extends Fixture
         // chargement de Faker
         $fake = Factory::create("fr_BE");
 
+        // nombre d'utilisateurs
+        $_SESSION['nbUser'] = 50;
+
         // Autant d'utilisateurs que l'on souhaite
-        for($i=0;$i<50;$i++) {
+        for($i=0;$i<$_SESSION['nbUser'];$i++) {
 
             // création d'une instance de Entity/User
             $user = new User();

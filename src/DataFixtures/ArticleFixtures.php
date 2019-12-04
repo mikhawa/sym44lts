@@ -17,7 +17,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
 
         // chargement de Faker
         $fake = Factory::create("fr_BE");
-        $a=0;
+
         // Autant d'articles que l'on souhaite
         for($i=0;$i<100;$i++) {
 
@@ -31,10 +31,10 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $slug = $fake->slug;
             $text = $fake->text(500);
             $date = $fake->dateTime();
-            // chargement des objets users tant qu'il y en a (0 à 49)
-            if($a>49) $a=0;
+
+            $a = random_int(0,$_SESSION['nbUser']-1);
             $iduser = $this->getReference("user_reference_" . $a);
-            $a++;
+
 
             // utilisation des setters pour remplir l'instance
             $article->setTitre($titre)
