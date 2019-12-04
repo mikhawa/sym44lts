@@ -30,11 +30,18 @@ class CategFixtures extends Fixture implements DependentFixtureInterface
 
 
             // setters de la table categ
-            $categ->setTitre($fake->sentence(10,true))
-            ->setSlug($fake->slug(8,true))
-            ->setDescr($fake->sentence(45,true));
+            $categ->setTitre($fake->sentence(8,true))
+            ->setSlug($fake->slug(6,true))
+            ->setDescr($fake->sentence(25,true));
 
-            $categ->addArticleIdarticle();
+            // nombre d'articles se trouvant dans cette rubrique (entre 1 et 20)
+            $nbArticle = random_int(1,20);
+
+            // tant qu'on doit rajouter des articles
+            for($b=0;$b<$nbArticle;$b++) {
+                $recupArticle = $this->getReference("mes_articles_".random_int(0,$nb_article-1));
+                $categ->addArticleIdarticle($recupArticle);
+            }
 
 
             $manager->persist($categ);
