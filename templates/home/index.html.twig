@@ -11,4 +11,22 @@
     {% endfor %}
 {% endblock %}
 
+    {% block content %}
+        <!-- Begin page content -->
+        <main role="main" class="flex-shrink-0">
+            <div class="container">
+                <h1 class="mt-5">Nos articles</h1>
+                <p class="lead">Nos 10 derniers articles</p>
+                {% for item in articles %}
+                <hr>
+                <h3>{{ item.titre }}</h3>
+                <p>{{ item.texte }}</p>
+                <p>{{ item.userIduser.thename }}</p>
+                {% endfor %}
+            </div>
+        </main>
+    {% endblock %}
+
+
+
 
