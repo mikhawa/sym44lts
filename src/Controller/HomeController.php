@@ -20,8 +20,8 @@ class HomeController extends AbstractController
         // Doctrine récupère tous les champs de la table Categ
         $recupMenu = $this->getDoctrine()->getRepository(Categ::class)->findAll();
 
-        // Doctrine récupère les articles
-        $recupArticles = $this->getDoctrine()->getRepository(Article::class)->findAll();
+        // Doctrine récupère les 10 derniers articles
+        $recupArticles = $this->getDoctrine()->getRepository(Article::class)->findBy([],["thedate"=>"DESC"],10);
 
         //dump($recupMenu);
 

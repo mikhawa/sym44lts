@@ -481,4 +481,44 @@ Puis dans la vue templates/home/index.html :
             <a class="nav-link" href="{{ path("categ",{slug:item.slug}) }}">{{ item.titre }}</a>
         </li>
         {% endfor %}
-    {% endblock %}                     
+    {% endblock %}
+#### On récupère tous les articles
+homeController:
+    
+    ...
+    // nécessaire pour les articles
+    use App\Entity\Article;    
+    ...
+    // Doctrine récupère les articles
+    $recupArticles = $this->getDoctrine()->getRepository(Article::class)->findAll();
+    
+    //dump($recupMenu);
+    
+    // chargement du template
+    return $this->render('home/index.html.twig', [
+        // envoi du résultat de la requête à twig sous le nom "suitemenu"
+        "suitemenu"=>$recupMenu,
+        "articles"=>$recupArticles,
+     ]);   
+C'est la manère dont on appel ce qu'on veut voir dans twig qui va changer la requête, ici on joint la table user automatiquement grâce à l'id :
+
+    {{ item.userIduser.thename }}
+    
+home/index.html.twig
+
+    {% block content %}
+            <!-- Begin page content -->
+            <main role="main" class="flex-shrink-0">
+                <div class="container">
+                    <h1 class="mt-5">Nos articles</h1>
+                    <p class="lead">Nos 10 derniers articles</p>
+                    {% for item in articles %}
+                    <hr>
+                    <h3>{{ item.titre }}</h3>
+                    <p>{{ item.texte }}</p>
+                    <p>{{ item.userIduser.thename }}</p>
+                    {% endfor %}
+                </div>
+            </main>
+        {% endblock %}   
+                                
