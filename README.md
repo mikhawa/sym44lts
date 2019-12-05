@@ -584,4 +584,22 @@ Pour compresser le code (peu efficace au début dumoins):
                 </div>
             </main>
             {% endapply %}    
-                         
+
+#### Créer un dossier Utils dans src
+et créer votre "service", une simple classe sous le nom de Slugger:
+
+    <?php
+    
+    
+    namespace App\Utils;
+    
+    
+    class Slugger
+    {
+        public static function slugify(string $string): string
+        {
+            return preg_replace('/\s+/', '-', mb_strtolower(trim(strip_tags($string)), 'UTF-8'));
+        }
+    }
+    
+                             
