@@ -30,7 +30,7 @@ class CategFixtures extends Fixture implements DependentFixtureInterface
 
 
             // setters de la table categ
-            $categ->setTitre($fake->sentence(3,false))
+            $categ->setTitre($fake->word)
             ->setSlug($fake->slug(3,true))
             ->setDescr($fake->sentence(25,true));
 

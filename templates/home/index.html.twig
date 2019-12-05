@@ -3,9 +3,9 @@
 {% block title %}{{ parent() }} | Accueil{% endblock %}
 
 {% block menuhaut %}
-    {% for clef, valeur in suitemenu %}
+    {% for item in suitemenu %}
     <li class="nav-item">
-        <a class="nav-link" href="{{ path('homepage') }}">{{ clef }}</a>
+        <a class="nav-link" href="?rubrique={{ item.slug }}">{{ item.titre }}</a>
     </li>
     {% endfor %}
 {% endblock %}

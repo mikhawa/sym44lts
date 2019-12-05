@@ -432,5 +432,33 @@ Et pour exécuter l'insertion dans la DB:
 
     php bin/console doctrine:fixtures:load
 
+### Première requête avec Doctrine
+On effectue cette requête depuis HomeController.php, comme on récupère une menu (table categ) on fait un use de son entité
 
-                   
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Routing\Annotation\Route;
+    // nécessaire pour la requête du menu
+    use App\Entity\Categ;
+Doctrine est chargé depuis src/Entity/Categ.php 
+   
+Pour récupérer toutes les categ, on utilise le findall sur la classe Categ:
+
+    // Doctrine récupère tous les champs de la table Categ
+    $recupMenu = $this->getDoctrine()->getRepository(Categ::class)->findAll();     
+    
+Puis on passe cette variable à la vue (findall crée un tableau indexé contenant toutes les réponses à notre requête)  
+
+    // chargement du template
+    return $this->render('home/index.html.twig', [
+    // envoi du résultat de la requête à twig sous le nom "suitemenu"
+          "suitemenu"=>$recupMenu,
+    ]);
+Dans templates/home/index.html?twig
+
+    {% block menuhaut %}
+        {% for item in suitemenu %}
+        <li class="nav-item">
+            <a class="nav-link" href="?rubrique={{ item.slug }}">{{ item.titre }}</a>
+        </li>
+        {% endfor %}
+    {% endblock %}                     

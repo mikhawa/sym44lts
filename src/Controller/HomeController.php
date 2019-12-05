@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
+// nécessaire pour la requête du menu
+use App\Entity\Categ;
 
 class HomeController extends AbstractController
 {
@@ -14,19 +14,15 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        $em = $this->getDoctrine()->getRepository(User::class);
-        $query = $em->find(random_int(56,103));
-        //shuffle($query);
-        dump($query);
-        // création d'un tableau pour l'envoyer à twig
-        $menu = ["Actualités"=>"actualites",
-                "Qui sommes-nous"=>"whois",
-                "Nous contacter"=>"contact",
-            ];
+        // Doctrine récupère tous les champs de la table Categ
+        $recupMenu = $this->getDoctrine()->getRepository(Categ::class)->findAll();
+
+        //dump($recupMenu);
+
         // chargement du template
         return $this->render('home/index.html.twig', [
-            // envoi du tableau à twig sous le nom "suitemenu"
-            "suitemenu"=>$menu,
+            // envoi du résultat de la requête à twig sous le nom "suitemenu"
+            "suitemenu"=>$recupMenu,
         ]);
     }
 
