@@ -461,4 +461,24 @@ Dans templates/home/index.html?twig
             <a class="nav-link" href="?rubrique={{ item.slug }}">{{ item.titre }}</a>
         </li>
         {% endfor %}
+    {% endblock %}       
+#### Création de la route vers les catégories
+Dans HomeController.php
+
+    /**
+     * @Route("/categ/{slug}", name="categ")
+     */
+    public function detailCateg($slug){
+        return new Response($slug);
+    } 
+                     
+Puis dans la vue templates/home/index.html :
+    
+    {% block menuhaut %}
+        {% for item in suitemenu %}
+        <li class="nav-item">
+            {# chemin vers la route nommée "categ" avec son paramètre obligatoire {slug auquel on passe le vrai slug venant de la requête #}
+            <a class="nav-link" href="{{ path("categ",{slug:item.slug}) }}">{{ item.titre }}</a>
+        </li>
+        {% endfor %}
     {% endblock %}                     

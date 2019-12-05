@@ -5,7 +5,8 @@
 {% block menuhaut %}
     {% for item in suitemenu %}
     <li class="nav-item">
-        <a class="nav-link" href="?rubrique={{ item.slug }}">{{ item.titre }}</a>
+        {# chemin vers la route nommée "categ" avec son paramètre obligatoire {slug auquel on passe le vrai slug venant de la requête #}
+        <a class="nav-link" href="{{ path("categ",{slug:item.slug}) }}">{{ item.titre }}</a>
     </li>
     {% endfor %}
 {% endblock %}

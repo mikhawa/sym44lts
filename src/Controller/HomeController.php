@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 // nécessaire pour la requête du menu
 use App\Entity\Categ;
@@ -24,6 +25,12 @@ class HomeController extends AbstractController
             // envoi du résultat de la requête à twig sous le nom "suitemenu"
             "suitemenu"=>$recupMenu,
         ]);
+    }
+    /**
+ * @Route("/categ/{slug}", name="categ")
+ */
+    public function detailCateg($slug){
+        return new Response($slug);
     }
 
 }
