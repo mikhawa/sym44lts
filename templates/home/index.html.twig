@@ -31,7 +31,7 @@
                      Aucune catégorie
                     {% endfor %}
                 </h6>
-                <p>{{ item.texte }}</p>
+                <p>{{ item.texte|u.truncate(100,'...') }}</p>
                 <p>{{ item.userIduser.thename }}</p>
                 {% endfor %}
             </div>

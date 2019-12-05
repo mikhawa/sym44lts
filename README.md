@@ -553,4 +553,14 @@ dans /home/index.html.twig
            <p>{{ item.userIduser.thename }}</p>
            {% endfor %}
          </div>
-                      
+ ### Extension pour twig:
+ 
+    composer require twig/string-extra
+doc: https://packagist.org/packages/twig/html-extra
+
+car actuellement n'est pas encore disponible : https://twig-extensions.readthedocs.io/en/latest/
+
+puis dans la vue
+    
+    <p>{{ item.texte|u.truncate(100,'...') }}</p>
+                         

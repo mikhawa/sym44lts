@@ -34,8 +34,8 @@ class CategFixtures extends Fixture implements DependentFixtureInterface
             ->setSlug($fake->slug(3,true))
             ->setDescr($fake->sentence(25,true));
 
-            // nombre d'articles se trouvant dans cette rubrique (entre 1 et 20)
-            $nbArticle = random_int(1,50);
+            // nombre d'articles se trouvant dans cette rubrique (entre 1 et 80)
+            $nbArticle = random_int(1,80);
 
             // tant qu'on doit rajouter des articles
             for($b=0;$b<$nbArticle;$b++) {
