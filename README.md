@@ -521,4 +521,36 @@ home/index.html.twig
                 </div>
             </main>
         {% endblock %}   
-                                
+#### récupération de 10 articles avec findBy
+
+    // Doctrine récupère les 10 derniers articles
+    $recupArticles = $this->getDoctrine()->getRepository(Article::class)->findBy([],["thedate"=>"DESC"],10);       
+                   
+### jointures automatiques depuis twig !
+dans /home/index.html.twig   
+
+        <div class="container">
+           <h1 class="mt-5">Nos articles</h1>
+           <p class="lead">Nos 10 derniers articles</p>
+           {% for item in articles %}
+           <hr>
+           <h3>{{ item.titre }}</h3>
+           <h6>Catégories:
+           
+               {# Tant que l'on a des catégories pour cet article#}
+               {% for cat in item.categIdcateg %}
+                   <a href="{{ path("categ",{slug:cat.slug}) }}">{{ cat.titre }}</a>
+                   
+                   {# si on est pas au dernier tour, on rajoute un | #}
+                   {% if not loop.last %} | {% endif %}
+                   
+               {# Cet article n'est dans aucune catégorie #}
+               {% else %}
+                Aucune catégorie
+               {% endfor %}
+           </h6>
+           <p>{{ item.texte }}</p>
+           <p>{{ item.userIduser.thename }}</p>
+           {% endfor %}
+         </div>
+                      
