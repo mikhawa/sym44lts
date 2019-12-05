@@ -563,4 +563,25 @@ car actuellement n'est pas encore disponible : https://twig-extensions.readthedo
 puis dans la vue
     
     <p>{{ item.texte|u.truncate(100,'...') }}</p>
+Pour compresser le code (peu efficace au début dumoins):
+{% apply spaceless %} l'html {% endapplay %}
+
+    {% apply spaceless %}
+            <!-- Begin page content -->
+            <main role="main" class="flex-shrink-0">
+                <div class="container">
+                    <h1 class="mt-5">Nos articles</h1>
+                    <p class="lead">Nos 10 derniers articles</p>
+                    {% for item in articles %}
+                    <hr>
+                    <h3>{{ item.titre }}</h3>
+                    <h6>Catégories:{% for cat in item.categIdcateg %}
+                            <a href="{{ path("categ",{slug:cat.slug}) }}">{{ cat.titre }}</a>{% if not loop.last %} | {% endif %}{% else %}Aucune catégorie{% endfor %}
+                    </h6>
+                    <p>{{ item.texte|u.truncate(100,'...') }}</p>
+                    <p>{{ item.userIduser.thename }}</p>
+                    {% endfor %}
+                </div>
+            </main>
+            {% endapply %}    
                          

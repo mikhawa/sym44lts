@@ -3,15 +3,18 @@
 {% block title %}{{ parent() }} | Accueil{% endblock %}
 
 {% block menuhaut %}
+    {% apply spaceless %}
     {% for item in suitemenu %}
     <li class="nav-item">
         {# chemin vers la route nommée "categ" avec son paramètre obligatoire {slug auquel on passe le vrai slug venant de la requête #}
         <a class="nav-link" href="{{ path("categ",{slug:item.slug}) }}">{{ item.titre }}</a>
     </li>
     {% endfor %}
+    {% endapply %}
 {% endblock %}
 
     {% block content %}
+        {% apply spaceless %}
         <!-- Begin page content -->
         <main role="main" class="flex-shrink-0">
             <div class="container">
@@ -20,22 +23,15 @@
                 {% for item in articles %}
                 <hr>
                 <h3>{{ item.titre }}</h3>
-                <h6>Catégories:
-                    {# Tant que l'on a des catégories pour cet article#}
-                    {% for cat in item.categIdcateg %}
-                        <a href="{{ path("categ",{slug:cat.slug}) }}">{{ cat.titre }}</a>
-                        {# si on est pas au dernier tour, on rajoute un | #}
-                        {% if not loop.last %} | {% endif %}
-                    {# Cet article n'est dans aucune catégorie #}
-                    {% else %}
-                     Aucune catégorie
-                    {% endfor %}
+                <h6>Catégories:{% for cat in item.categIdcateg %}
+                        <a href="{{ path("categ",{slug:cat.slug}) }}">{{ cat.titre }}</a>{% if not loop.last %} | {% endif %}{% else %}Aucune catégorie{% endfor %}
                 </h6>
                 <p>{{ item.texte|u.truncate(100,'...') }}</p>
                 <p>{{ item.userIduser.thename }}</p>
                 {% endfor %}
             </div>
         </main>
+        {% endapply %}
     {% endblock %}
 
 
